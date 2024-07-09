@@ -178,23 +178,29 @@ Now that we learned how to set up and configure openai, it's time to build your 
 1. Create an _app.py_ file and give it the following code:
 
    ```python
-   import openai
+   from openai import AzureOpenAI
 
-   openai.api_key = "<replace this value with your open ai key or Azure OpenAI key>"
-
-   openai.api_type = 'azure'
-   openai.api_version = '2023-05-15'
-   openai.api_base = "<endpoint found in Azure Portal where your API key is>"
-   deployment_name = "<deployment name>"
+   # gets the API Key from environment variable AZURE_OPENAI_API_KEY
+   client = AzureOpenAI(
+     api_version="2023-05-15",
+     azure_endpoint = "<endpoint found in Azure Portal where your API key is>",
+     api_key = "<replace this value with your open ai key or Azure OpenAI key>",
+     azure_deployment="<deployment name>"
+   )
 
    # add your completion code
    prompt = "Complete the following: Once upon a time there was a"
-   messages = [{"role": "user", "content": prompt}]
 
-   # make completion
-   completion = client.chat.completions.create(model=deployment, messages=messages)
+   completion = client.chat.completions.create(
+     model="<deployment name>",  # e.g. gpt-35-instant
+     messages=[
+       {
+         "role": "user",
+         "content": prompt
+       },
+     ],
+   )
 
-   # print response
    print(completion.choices[0].message.content)
    ```
 
