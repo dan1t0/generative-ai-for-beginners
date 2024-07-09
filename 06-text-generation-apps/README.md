@@ -580,6 +580,7 @@ What we have so far is code that works, but there are some tweaks we should be d
 
      ```python
      from dotenv import load_dotenv
+     import os
 
      load_dotenv()
 
